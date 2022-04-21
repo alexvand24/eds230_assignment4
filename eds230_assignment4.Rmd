@@ -1,0 +1,64 @@
+---
+title: "EDS230 Assignment 4"
+author: "Charles Hendrickson, Ryan Munnikhuis, Alex Vand"
+date: "4/21/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE, 
+                      warning = FALSE)
+
+library(tidyverse)
+library(here)
+library(pse)
+
+#read in the atmospheric_conductance R script in order to use the function in this RMD 
+source(here("atmospheric_conductance.R"))
+```
+
+
+
+
+```{r}
+# Q2
+atmospheric_conductance(v_m = 250, h = 1000)
+```
+
+
+```{r}
+factors = c("h", "k_d", "k_0", "v_m")
+```
+
+```{r}
+# number of parameter sets to run
+nsets = 100
+```
+
+```{r}
+q = c("qunif", "qnorm", "qnorm", "qnorm")
+q_arg = list(list(min = 9.5, max = 10.5),  # h
+             list(mean = 0.7, sd = 0.01),  # k_d
+             list(mean = 0.1, sd = 0.01),  # k_0
+             list(mean = 250, sd = 30))    # v_m
+```
+
+
+```{r}
+sens_atmospheric_conductance = LHS(NULL, factors, nsets, q, q_arg)
+sens_pars = get.data(sens_atmospheric_conductance)
+head(sens_pars)
+```
+
+
+
+
+
+
+
+
+
+
+
+

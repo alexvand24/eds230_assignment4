@@ -2,7 +2,7 @@
 title: "EDS230 Assignment 4"
 author: "Charles Hendrickson, Ryan Munnikhuis, Alex Vand"
 date: "4/21/2022"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -125,6 +125,7 @@ sens_atmospheric_conductance$prcc
 
 ```{r}
 # note that you don't see the ranges because of the scale (min yield anomaly much smaller than max) - here's a more informative way to graph
+tmp = conductance_df %>% gather(value="value", key="yield")
 ggplot(tmp, aes(yield, value, col=yield))+
   geom_boxplot()+labs(y="Yield (as anomoly)")+
   facet_wrap(~yield, scales="free" ) + theme_minimal()
@@ -134,12 +135,13 @@ ggplot(tmp, aes(yield, value, col=yield))+
 
 Our results suggest that wind speed ($v_m$) and $k_0$ are the most sensitive parameters for estimating atmospheric conductance, followed by ($h$) and $kd$  (Figure 1  & Figure 2). Wind speed ($v_m$) intuitively makes sense since higher winds can carry away water vapor, drying the air. Interestingly, height had the least sensitivity, suggesting that height measurement values are the least likely to affect the atmospheric conductance outcome. 
 
-- What does it suggest about what you should focus on if you want to reduce uncertainty in aerodymaic conductance estimates?
+- What does it suggest about what you should focus on if you want to reduce uncertainty in aerodynamic conductance estimates?
 
-Based off these results, if you want to reduce uncertainty in atmospheric conductance estimates you should limit the input values for wind speed between 
+To reduce uncertainty, measurements should be taken during similar wind speeds and at a fixed point above plants.
 
 - Does this tell you anything about the sensitivity of plant water use to climate change?
 
+Climate change is resulting in hotter, drier, and windier climates. As such, plants’ evapotranspiration rates are increasing, resulting in a higher sensitivity of plant water use.
 
 
 

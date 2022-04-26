@@ -29,7 +29,7 @@ atmospheric_conductance(v_m = 250, h = 1000)
 
 ```{r}
 
-# Define sensitivity paramaters and inputs for Latin Hypercube Sampling (LHS)
+# Define sensitivity parameters and inputs for Latin Hypercube Sampling (LHS)
 factors = c("v_m", "h", "k_d", "k_0")
 ```
 
@@ -71,7 +71,7 @@ head(sens_pars)
 conductance <- sens_pars %>% pmap(atmospheric_conductance)
 
 # notice that what pmap returns is a list 
-head(conductance)
+#head(conductance)
 
 conductance_only <- do.call("rbind", conductance)
 
@@ -113,33 +113,15 @@ pse::plotscatter(sens_atmospheric_conductance, col="blue", cex=5)
 ```{r}
 # Plots the partial rank correlation coefficient from an LHS object
 pse::plotprcc(sens_atmospheric_conductance)
+
 ```
 
 ```{r}
 # partial rank correlation coefficient values from chart above. 
 sens_atmospheric_conductance$prcc
 ```
-**Figure 3: Max vs Minimum Yield Anomaly**
 
-```{r}
-# we can also plot results in interesting ways
-# turns conductance values into a data frame - easier access to R plotting functions
-
-ggplot(conductance_df, aes(x = v_m, y = conductance_only))+geom_point() + 
-  labs(title = "Max vs Minimum Yield Anomaly", y="Max Yield (as anomoly)", x ="Min Yield (as anomoly)" ) + theme_minimal()
-```
-
-
-**Figure 4: Uncertainty Bounds Chart**
-
-```{r}
-# add uncertainty bounds on our estimates
-tmp = conductance_df %>% gather(value="value", key="yield")
-ggplot(tmp, aes(yield, value, col=yield))+geom_boxplot()+
-  labs(y="Conductance (as anomoly)") + theme_minimal()
-```
 **Figure 5: Uncertainty Bounds Chart Divided**
-
 
 ```{r}
 # note that you don't see the ranges because of the scale (min yield anomaly much smaller than max) - here's a more informative way to graph
@@ -150,9 +132,13 @@ ggplot(tmp, aes(yield, value, col=yield))+
 
 ## Conclusion 
 
-Our results suggest that wind speed ($v_m$) and $k_0$ are the most sensitive parameters for estimating atmospheric conductance, followed by ($h$) and $kd$  (Figure 1  & Figure 2). Windspeed intuitively makes sense since higher winds can carry away water vapor, drying the air. Interestingly, height had the least sensitivity, suggesting that height measurement values are the least likely to affect the atmospheric conductance outcome.   
+Our results suggest that wind speed ($v_m$) and $k_0$ are the most sensitive parameters for estimating atmospheric conductance, followed by ($h$) and $kd$  (Figure 1  & Figure 2). Wind speed ($v_m$) intuitively makes sense since higher winds can carry away water vapor, drying the air. Interestingly, height had the least sensitivity, suggesting that height measurement values are the least likely to affect the atmospheric conductance outcome. 
 
+- What does it suggest about what you should focus on if you want to reduce uncertainty in aerodymaic conductance estimates?
 
+Based off these results, if you want to reduce uncertainty in atmospheric conductance estimates you should limit the input values for wind speed between 
+
+- Does this tell you anything about the sensitivity of plant water use to climate change?
 
 
 
